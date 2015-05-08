@@ -3,9 +3,9 @@
 
 ## Présentation de TDD
 
-Le répertoire *presentation-tdd* contient la présentation théorique de TDD.
+La présentation théorique de TDD est disponible dans *présentations/tdd-en-5-minutes*.
 
-Il suffit d'ouvrir le fichier *presentation-tdd/index.html* dans son navigateur pour la consulter.
+Il suffit d'ouvrir le fichier *index.html* dans son navigateur pour la consulter.
 
 La présentation se poursuit avec une démonstration autour de l'exercice du Mölkky. L'implémentation est disponible dans le répertoire *exemples/kata-molkky-java*.
 
@@ -22,6 +22,13 @@ Ils concernent les technologies suivantes :
 * JavaScript avec Mocha et Chai
 * Ruby avec Minitest
 * Bash avec shebang-unit
+
+
+## Code Retreat
+
+La présentation du Code Retreat est disponible dans *présentations/code-retreat*.
+
+Il suffit d'ouvrir le fichier *index.html* dans son navigateur pour la consulter.
 
 
 ## Licence
