@@ -7,12 +7,14 @@ Le répertoire *presentation-tdd* contient la présentation théorique de TDD.
 
 Il suffit d'ouvrir le fichier *presentation-tdd/index.html* dans son navigateur pour la consulter.
 
+La présentation se poursuit avec une démonstration autour de l'exercice du Mölkky. L'implémentation est disponible dans le répertoire *exemples/kata-molkky-java*.
+
 
 ## Kits de démarrage
 
 Pour démarrer plus rapidement un exercice, il est possible de récupérer des kits contenant le minimum pour lancer des tests.
 
-Les différents kits sont dans le répertoire *tdd-kits**. Chacun dispose d'un *README.md* à la racine.
+Les différents kits sont dans le répertoire *tdd-kits*. Chacun dispose d'un *README.md* à la racine.
 
 Ils concernent les technologies suivantes :
 
