@@ -1,6 +1,6 @@
-# Kata Mölkky en Java
+# Kata Jeu de la vie en Java
 
-Implémentation du calcul du score au Mölkky.
+Implémentation du Jeu de la vie.
 
 Les règles sont disponibles sur [wikipedia].
 
@@ -9,10 +9,10 @@ Les règles sont disponibles sur [wikipedia].
 
     gradle test
 
-    
+
 ## Lancer la qualimétrie et les tests
 
-    gradle    
+    gradle
 
 
 ## Bibliothèques utilisées
@@ -24,7 +24,7 @@ Les règles sont disponibles sur [wikipedia].
 * Mock api: [Mockito]
 
 
-[wikipedia]: http://fr.wikipedia.org/wiki/M%C3%B6lkky
+[wikipedia]: http://fr.wikipedia.org/wiki/Jeu_de_la_vie
 [AssertJ]: https://joel-costigliola.github.io/assertj
 [JUnit]: http://junit.org
 [PMD]: http://pmd.sourceforge.net

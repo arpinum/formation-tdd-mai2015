@@ -30,6 +30,8 @@ La présentation du Code Retreat est disponible dans *présentations/code-retrea
 
 Il suffit d'ouvrir le fichier *index.html* dans son navigateur pour la consulter.
 
+Une implémentation de l'exercice du Jeu de la vie est disponible dans *exemples/kata-jeu-de-la-vie-java*.
+
 
 ## Licence
 

@@ -1,7 +1,4 @@
-tdd-kits/tdd-kit-ruby/coverage
-tdd-kits/tdd-kit-javascript/coverage
-tdd-kits/tdd-kit-javascript/node_modules
-tdd-kits/tdd-kit-java/.gradle
-tdd-kits/tdd-kit-java/build
-exemples/kata-molkky-java/.gradle
-exemples/kata-molkky-java/build
+coverage
+node_modules
+.gradle
+build
