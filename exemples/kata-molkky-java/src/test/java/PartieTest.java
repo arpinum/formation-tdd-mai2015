@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PartieTest {
 
     @Before
-    public void avantChaqueTest() {
+    public void before() {
         partie = new Partie();
     }
 

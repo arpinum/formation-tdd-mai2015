@@ -24,6 +24,11 @@ Ils concernent les technologies suivantes :
 * Bash avec shebang-unit
 
 
+## Exercices
+
+Dans le répertoires *exercices* figurent des instructions pour différents exercices de programmation. Ils sont issus du projet [cyber-dojo].
+
+
 ## Code Retreat
 
 La présentation du Code Retreat est disponible dans *présentations/code-retreat*.
@@ -41,5 +46,7 @@ Copyright (C) 2015, Arpinum
 
 **formation-tdd-mai2015** est distribué dans l'espoir qu'il sera utile, mais SANS AUCUNE GARANTIE ; pas même la garantie implicite de COMMERCIABILISABILITÉ ni d'ADÉQUATION à UN OBJECTIF PARTICULIER. Consultez la GNU Lesser General Public License pour plus de détails.
 
-Vous devez avoir reçu une copie de la GNU Lesser General Public License en même temps que **formation-tdd-mai2015** ; si ce n'est pas le cas, consultez [http://www.gnu.org/licenses/lgpl.html].
+Vous devez avoir reçu une copie de la GNU Lesser General Public License en même temps que **formation-tdd-mai2015** ; si ce n'est pas le cas, consultez [http://www.gnu.org/licenses/lgpl.html](http://www.gnu.org/licenses/lgpl.html).
 
+
+[cyber-dojo]: https://github.com/JonJagger/cyber-dojo
