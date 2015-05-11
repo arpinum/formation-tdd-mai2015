@@ -26,7 +26,7 @@ Ils concernent les technologies suivantes :
 
 ## Exercices
 
-Dans le répertoires *exercices* figurent des instructions pour différents exercices de programmation. Ils sont issus du projet [cyber-dojo].
+Dans le répertoires *exercices* figurent des instructions pour différents exercices de programmation. Ils sont issus du [projet cyber-dojo].
 
 
 ## Code Retreat
@@ -36,6 +36,14 @@ La présentation du Code Retreat est disponible dans *présentations/code-retrea
 Il suffit d'ouvrir le fichier *index.html* dans son navigateur pour la consulter.
 
 Une implémentation de l'exercice du Jeu de la vie est disponible dans *exemples/kata-jeu-de-la-vie-java*.
+
+
+## Nous en avons parlé
+
+* [Working Effectively With Legacy Code]
+* [Refactoring]
+* [Refactorer legacy]
+* [cyber-dojo]
 
 
 ## Licence
@@ -49,4 +57,8 @@ Copyright (C) 2015, Arpinum
 Vous devez avoir reçu une copie de la GNU Lesser General Public License en même temps que **formation-tdd-mai2015** ; si ce n'est pas le cas, consultez [http://www.gnu.org/licenses/lgpl.html](http://www.gnu.org/licenses/lgpl.html).
 
 
-[cyber-dojo]: https://github.com/JonJagger/cyber-dojo
+[projet cyber-dojo]: https://github.com/JonJagger/cyber-dojo
+[cyber-dojo]: http://cyber-dojo.org
+[Working Effectively With Legacy Code]: http://c2.com/cgi/wiki?WorkingEffectivelyWithLegacyCode
+[Refactoring]: http://c2.com/cgi/wiki?RefactoringImprovingTheDesignOfExistingCode
+[Refactorer legacy]: http://martinsson-johan.blogspot.fr/2014/05/refactorer-legacy-meme-pas-peur.html
