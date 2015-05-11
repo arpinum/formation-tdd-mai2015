@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="fr">
+
+  <head>
+    <title>Pratiquer TDD</title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="Pratiquer TDD">
+    <meta name="author" content="Michael">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js/css/theme/beige.css" id="theme">
+    <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+    <link rel="stylesheet" href="css/redefinitions.css">
+
+    <!--[if lt IE 9]>
+    <script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
+  </head>
+
+  <body>
+    <div class="reveal">
+
+      <div class="slides">
+
+        <section>
+          <h1>Pratiquer TDD</h1>
+
+          <p>
+            <small><a href="https://twitter.com/michael_borde">Michael Borde</a> /
+              <a href="http://twitter.com/michael_borde">@michael_borde</a>
+              / <a href="http://arpinum.fr">arpinum.fr</a>
+            </small>
+          </p>
+          <img width="10%" height="10%" src="images/logo-arpinum.png" alt="Arpinum"/>
+        </section>
+
+        <section>
+          <h3>Une vie après le Fizzbuzz ?</h3>
+          <figure>
+            <img width="60%" height="60%" src="images/bisounours.jpg" alt="Bisounours"/>
+            <figcaption>
+              <small>© Kenner</small>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h2>Décortiquons la mission</h2>
+
+          <p>Du code propre qui fonctionne maintenant.</p>
+        </section>
+
+        <section>
+          <h3>Un premier test</h3>
+          <pre><code data-trim class="java">
+public class ConvertisseurAdresseTest {
+
+  @Test
+  public void uneAdresseComplètePeutSAfficherSurUneLigne() {
+    Adresse adresse = new Adresse();
+    adresse.setRue("31 rue des poulets");
+    adresse.setCodePostal("33400");
+    adresse.setVille("Talence");
+
+    String chaine = new ConvertisseurAdresse(adresse).surUneLigne();
+
+    assertThat(chaine).isEqualTo("31 rue des poulets 33400 Talence");
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Focus sur le "qui fonctionne"</h3>
+          <pre><code data-trim class="java">
+public class ConvertisseurAdresse {
+
+  public ConvertisseurAdresse(Adresse adresse) {
+  }
+
+  public String surUneLigne() {
+    return "31 rue des poulets 33400 Talence";
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Focus sur le "propre"</h3>
+          <pre><code data-trim class="java">
+public class ConvertisseurAdresse {
+
+  public ConvertisseurAdresse(Adresse adresse) {
+    this.adresse = adresse;
+  }
+
+  public String surUneLigne() {
+    return String.format("%s %s %s",
+                         this.adresse.getRue(),
+                         this.adresse.getCodePostal(),
+                         this.adresse.getVille());
+  }
+
+  private Adresse adresse;
+}
+          </code></pre>
+        </section>
+
+
+        <section>
+          <h3>Un deuxième test</h3>
+          <pre><code data-trim class="java">
+@Test
+public void uneAdresseVideSAfficheVideSurUneLigne() {
+  Adresse adresse = new Adresse();
+
+  String chaine = new ConvertisseurAdresse(adresse).surUneLigne();
+
+  assertThat(chaine).isEqualTo("");
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Focus sur le "qui fonctionne"</h3>
+          <pre><code data-trim class="java">
+public String surUneLigne() {
+  String rue = this.adresse.getRue() != null
+                 ? this.adresse.getRue() + " "
+                 : "";
+
+  String codePostal = this.adresse.getCodePostal() != null
+                        ? this.adresse.getCodePostal() + " "
+                        : "";
+
+  String ville = this.adresse.getVille() != null
+                   ? this.adresse.getVille()
+                   : "";
+
+  return String.format("%s%s%s", rue, codePostal, ville);
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Focus sur le "propre"</h3>
+          <pre><code data-trim class="java">
+public String surUneLigne() {
+  List&lt;String&gt; parties = Lists.newArrayList(adresse.getRue(),
+                                            adresse.getCodePostal(),
+                                            adresse.getVille());
+  return Joiner.on(" ").skipNulls().join(parties);
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>TDD découple les activités de <strong>recherche de solution</strong> et <strong>respect de
+            l'excellence technique</strong> pour les exécuter au <strong>moment le plus pertinent</strong>.
+          </p>
+        </section>
+
+        <section>
+          <h2>Par où commencer ?</h2>
+        </section>
+
+        <section>
+          <h3>Le monde hostile des applications complexes</h3>
+          <figure>
+            <img width="50%" height="50%" src="images/machine-infernale.jpg" alt="Machine infernale"/>
+            <figcaption>
+              <small>© Alice Moisset</small>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h3>La "Clean Architecture"</h3>
+          <figure>
+            <img width="60%" height="60%" src="images/clean-architecture.jpg" alt="Clean Architecture"/>
+            <figcaption>
+              <small>© Uncle Bob</small>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h3>Un point de départ : le modèle du domaine</h3>
+          <ul>
+            <li>Définit le langage omniprésent,</li>
+            <li>Soulève les questions fonctionnelles,</li>
+            <li>Peu de complexité technique,</li>
+            <li>Tests orientés résultat.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>Des tests orientés résultat ?</p>
+        </section>
+
+        <section>
+          <h3>Un test de chorégraphie</h3>
+          <pre><code data-trim class="actionscript">
+[Test]
+public function impossibleDEcouterUnEvenementPlusieursFois():void {
+  var ecouteur:EcouteurDEvenement = nice(EcouteurDEvenement);
+  _bus.ajouteEcouteur(ecouteur, _evenement);
+  _bus.ajouteEcouteur(ecouteur, _evenement);
+
+  _bus.evenementSurvenu(_evenement);
+
+  assertThat(ecouteur, received().method("evenementSurvenu").once());
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Un test de résultat</h3>
+          <pre><code data-trim class="actionscript">
+[Test]
+public function leLancePierreAjusteLeProjectileAuTouché():void {
+  _touché.deplaceVers(new Point(13, 37));
+
+  _lancePierre.ajusteLeProjectile(_touche);
+
+  assertThat(_projectile.x, equalTo(13));
+  assertThat(_projectile.y, equalTo(37));
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Les doublures de test sont un mal parfois nécessaire.</p>
+        </section>
+
+        <section>
+          <p>Problème de test = problème de code de prod.</p>
+        </section>
+
+        <section>
+          <h2>Corriger des bugs en TDD</h2>
+        </section>
+
+        <section>
+          <h3>Des approches parfois scandaleuses</h3>
+          <ul>
+            <li>Je corrige à l'aveugle,</li>
+            <li>Je mets des logs partout,</li>
+            <li>Je mets des points d'arrêts partout,</li>
+            <li><strong>J'écris un test.</strong></li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Un exemple amusant</h3>
+        </section>
+
+        <section>
+          <p>Un innocent recruteur saisit la description d'offre :</p>
+          <blockquote>&ldquo;Vous serez en charge d'un enfant de 5 ans en périscolaire du matin de 6h45 à 7h45
+            ou en périscolaire du soir de 18h30 à 20h30, 3 à 4 fois par semaine en fonction du planning
+            déterminé par les parents.&rdquo;</blockquote>
+        </section>
+
+        <section>
+          <p>Il obtient le message d'erreur :</p>
+          <blockquote class="erreur">&ldquo;Le numéro de téléphone que vous avez saisi est surtaxé. Nous vous
+            remercions d'indiquer un numéro au tarif local ou un numéro de téléphone
+            mobile.&rdquo;</blockquote>
+        </section>
+
+        <section>
+          <h3>Oups</h3>
+          <figure>
+            <img width="60%" height="60%" src="images/chat-potte.jpg" alt="Chat potté"/>
+            <figcaption>
+              <small>© DreamWorks</small>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <p>Un indice :</p>
+          <blockquote>&ldquo;Vous serez en charge d'un enfant de 5 ans en périscolaire du matin de 6h45 à 7h45
+            ou en périscolaire du soir de <span class="indice">18</span>h<span class="indice">30</span> à
+            <span class="indice">20</span>h<span class="indice">30</span>, <span class="indice">3</span> à
+            <span class="indice">4</span> fois par semaine en fonction du planning déterminé par les
+            parents.&rdquo;</blockquote>
+        </section>
+
+        <section>
+          <h3>En coulisse</h3>
+
+          <p>Une regex trop envahissante :</p>
+          <pre><code data-trim class="java">
+public class DetecteurDeNumeroDeTelephone {
+
+  private static final Pattern PATTERN_TELEPHONE =
+                         Pattern.compile("(\\d(.){0,3}){9}\\d");
+
+  public List&lt;String&gt; detecte(String texte) {
+    List&lt;String&gt; numeros = Lists.newArrayList();
+    Matcher m = PATTERN_TELEPHONE.matcher(texte);
+        ...
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Quelques tests</h3>
+          <pre><code data-trim class="java">
+@Test
+public void lEnsembleDesNumerosSontDetectesDansUnTexte() {
+  String texte = "Voici mon numéro : 06 21 03 43 22, " +
+                 "vous pouvez me joindre au travail : 05-22-34-11-45";
+
+  List&lt;String&gt; numeros = this.detecteur.detecte(texte);
+
+  assertThat(numeros).containsExactly("0621034322", "0522341145");
+}
+          </code></pre>
+
+                    <pre class="fragment"><code data-trim class="java">
+@Test
+public void unNumeroNePeutPasAvoirDesChiffresSeparesPar3Caracteres() {
+  List&lt;String&gt; numeros = this.detecteur.detecte("04---04-04-04---04");
+
+  assertThat(numeros).isEmpty();
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>Des tests auto-vérifiant</h2>
+        </section>
+
+        <section>
+          <h3>Un test peu explicite</h3>
+          <pre><code data-trim class="java">
+@Test
+public void unCalendrierPeutDireSiUnJourEstOuvré() {
+  Calendrier calendrier = new Calendrier();
+  Calendar calendar = Calendar.getInstance();
+  calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+  assertThat(calendrier.estOuvré(calendar.getTime())).isTrue();
+
+  calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+  assertThat(calendrier.estOuvré(calendar.getTime())).isFalse();
+
+  calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+  assertThat(calendrier.estOuvré(calendar.getTime())).isFalse();
+}
+          </code></pre>
+        </section>
+        <section>
+          <p>En cas d'erreur :</p>
+          <pre>
+org.junit.ComparisonFailure:
+Expected: false, Actual: true
+
+      at unCalendrierPeutDireSiUnJourEstOuvré(TestCalendrier.java:23)
+          </pre>
+        </section>
+
+        <section>
+          <h3>Le test auto-vérifiant</h3>
+          <pre><code class="java volumineux">
+@Test
+public void unJourDeLaSemaineDeTravailEstOuvré() {
+  vérifieOuverture(Calendar.MONDAY, true);
+}
+
+@Test
+public void leSamediNEstPasOuvré() {
+  vérifieOuverture(Calendar.SATURDAY, false);
+}
+
+@Test
+public void leDimancheNEstPasOuvré() {
+  vérifieOuverture(Calendar.SUNDAY, false);
+}
+
+private void vérifieOuverture(int jour, boolean attendu) {
+  boolean ouvré = new Calendrier().estOuvré(créeJour(jour));
+  assertThat(ouvré).as("Jour ouvré").isEqualTo(attendu);
+}
+          </code></pre>
+        </section>
+        <section>
+          <p>En cas d'erreur :</p>
+          <pre>
+org.junit.ComparisonFailure: [Jour ouvré]
+Expected: false, Actual: true
+
+       leDimancheNEstPasUnJourOuvré(CalendrierTest.java:24)
+          </pre>
+        </section>
+
+        <section>
+          <p>Le test doit rester au service du développeur.</p>
+        </section>
+
+        <section>
+          <h2>Des tests répétables</h2>
+        </section>
+
+        <section>
+          <h3>Un problème de temps?</h3>
+          <figure>
+            <img width="60%" height="60%" src="images/lapin-alice.jpg" alt="Alice au pays des merveilles"/>
+            <figcaption>
+              <small>© Walt Disney Pictures</small>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h3>Un test peu fiable</h3>
+          <pre><code data-trim class="java">
+public class PublieurArticleTest {
+
+  @Test
+  public void laDateDePublicationDUnArticleEstLaDateCourante() {
+    Article article = new Article();
+    new PublieurArticle().publie(article);
+
+    Date datePublication = article.getDatePublication();
+
+    assertThat(datePublication).isEqualTo(new Date());
+  }
+}
+          </code></pre>
+          <div class="fragment">
+            <p>En cas d'erreur :</p>
+                        <pre>
+org.junit.ComparisonFailure: expected: java.lang.String<2013-11-17T18:42:50> but was: java.lang.String<2013-11-17T18:42:50>
+
+Expected :2013-11-17T18:42:50
+Actual   :2013-11-17T18:42:50
+
+      at laDateDeCréationDUnArticleEstLaDateCourante(PublieurArticleTest.java:18)
+                        </pre>
+          </div>
+        </section>
+
+        <section>
+          <h3>L'implémentation</h3>
+          <pre><code data-trim class="java">
+public class PublieurArticle {
+
+  public void publie(Article article) {
+    article.setDatePublication(new Date());
+  }
+}
+          </code></pre>
+          <div class="fragment">
+              <pre><code data-trim class="java">
+@Test
+public void laDateDePublicationDUnArticleEstLaDateCourante() {
+
+  ...
+
+  assertThat(datePublication).isEqualTo(new Date());
+}
+              </code></pre>
+            <p>La date courante a évoluée!</p>
+          </div>
+        </section>
+
+        <section>
+          <h3>Une amélioration : réduire la précision</h3>
+          <pre><code data-trim class="java">
+public class PublieurArticleTest {
+
+  @Test
+  public void laDateDePublicationDUnArticleEstLaDateCourante() {
+    Article article = new Article();
+    new PublieurArticle().publie(article);
+
+    Date datePublication = article.getDatePublication();
+
+    assertThat(datePublication).is(plusOuMoinsMaintenant());
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Autre piste : découplage du temps</h3>
+          <pre><code data-trim class="java">
+@Test
+public void laDateDePublicationDUnArticleEstLaDateCourante() {
+  Article article = new Article();
+  new PublieurArticle(créeTempsFigé(NOEL)).publie(article);
+
+  Date datePublication = article.getDatePublication();
+
+  assertThat(datePublication).isEqualTo(NOEL);
+}
+
+private Temps créeTempsFigé(final Date date) {
+  return new Temps() {
+    @Override public Date maintenant() {
+      return date;
+    }
+  };
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Et côté production</h3>
+          <pre><code data-trim class="java">
+public class PublieurArticle {
+
+  public PublieurArticle(Temps temps) {
+    this.temps = temps;
+  }
+
+  public void publie(Article article) {
+    article.setDatePublication(temps.maintenant());
+  }
+
+  private Temps temps;
+}
+          </code></pre>
+
+          <pre><code data-trim class="java">
+public interface Temps {
+
+  Date maintenant();
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Dans le même ordre d'idée</h3>
+          <pre><code data-trim class="java">
+@Test
+public void leFournisseurPeutFournirUnElémentAléatoirement() {
+  List&lt;String&gt; chaines = Lists.newArrayList("un", "deux", "trois");
+  GenerateurNombre générateur = new GenerateurNombreFige(1);
+  FournisseurElement fournisseur = new FournisseurElement(générateur);
+
+  String élément = fournisseur.fournisUnElémentDeLaListe(chaines);
+
+  assertThat(élément).isEqualTo("deux");
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Les tests doivent rester fiables qu'importe l'environnement.</p>
+        </section>
+
+        <section>
+          <h2>La qualité des tests est primordiale</h2>
+        </section>
+
+        <section>
+          <h3>La conséquence funeste des mauvais tests</h3>
+
+          <p>Tests contraignants =></p>
+
+          <p>Moins de tests =></p>
+
+          <p>Moins de feedbacks =></p>
+
+          <p>Moins de courage =></p>
+
+          <p>Moins de refactoring =></p>
+
+          <p>Code moins évolutif =></p>
+
+          <p>Moins d'agilité</p>
+        </section>
+
+        <section>
+          <h3>Vivement la v2!</h3>
+          <figure>
+            <img width="60%" height="60%" src="images/gerbe.jpg" alt="Gerbe"/>
+            <figcaption>
+              <small>© http://www.123fleurs.com</small>
+            </figcaption>
+          </figure>
+        </section>
+
+        <section>
+          <h3>Quelles sont les exigences de qualité des tests?</h3>
+        </section>
+
+        <section>
+          <h3>Une conception simple</h3>
+          <ul>
+            <li>Le code de test exprime l'intention,</li>
+            <li>Il est concis,</li>
+            <li>Sans duplication.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>Les mêmes exigences que pour le code de production !</p>
+        </section>
+
+        <section>
+          <p>Un test n'est que du <strong>code standard</strong> qui a pour seule particularité de ne pas
+            partir en production.</p>
+        </section>
+
+        <section>
+          <h2>Les questions qu'on ne se pose plus avec TDD</h2>
+        </section>
+
+        <section>
+          <p>Peut-on tester les méthodes privées ?</p>
+
+          <p class="fragment"><strong>Non-sens !</strong></p>
+        </section>
+
+        <section>
+          <p>Peut-on mocker les méthodes statiques ?</p>
+
+          <p class="fragment"><strong>Non-sens !</strong></p>
+        </section>
+      </div>
+    </div>
+
+    <script src="reveal.js/lib/js/head.min.js"></script>
+    <script src="reveal.js/js/reveal.js"></script>
+    <script>
+      (function () {
+        'use strict';
+
+        Reveal.initialize({
+          controls: false,
+          progress: true,
+          history: true,
+          center: true,
+          mouseWheel: true,
+
+          theme: Reveal.getQueryHash().theme || 'beige',
+          transition: Reveal.getQueryHash().transition || 'none',
+
+          dependencies: [
+            {
+              src: 'lib/js/classList.js',
+              condition: function () {
+                return !document.body.classList;
+              }
+            },
+            {
+              src: 'reveal.js/plugin/highlight/highlight.js',
+              async: true,
+              callback: function () {
+                hljs.initHighlightingOnLoad();
+              }
+            }
+          ]
+        });
+      })();
+    </script>
+  </body>
+</html>

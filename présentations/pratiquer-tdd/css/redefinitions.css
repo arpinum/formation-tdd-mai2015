@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.reveal section img {
+  border: 0;
+}
+
+.reveal pre code.volumineux {
+  max-height: 500px;
+}
+
+span.indice, blockquote.erreur {
+  color: red;
+}
