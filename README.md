@@ -29,11 +29,16 @@ Ils concernent les technologies suivantes :
 Dans le répertoires *exercices* figurent des instructions pour différents exercices de programmation. Ils sont issus du [projet cyber-dojo].
 
 
+## Présentation Pratiquer TDD
+
+La présentation Pratiquer TDD est disponible dans *présentations/pratiquer-tdd*.
+
+Elle apporte un complément sur TDD une fois que le développeur commence à être à l'aise avec la pratique.
+
+
 ## Code Retreat
 
 La présentation du Code Retreat est disponible dans *présentations/code-retreat*.
-
-Il suffit d'ouvrir le fichier *index.html* dans son navigateur pour la consulter.
 
 Une implémentation de l'exercice du Jeu de la vie est disponible dans *exemples/kata-jeu-de-la-vie-java*.
 
