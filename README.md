@@ -49,6 +49,9 @@ Une implémentation de l'exercice du Jeu de la vie est disponible dans *exemples
 * [Refactoring]
 * [Refactorer legacy]
 * [cyber-dojo]
+* [Mocks Aren't Stubs]
+* [Pour en finir avec les Stubs et les Mocks]
+* [Inversion of Control Containers and the Dependency Injection pattern]
 
 
 ## Licence
@@ -67,3 +70,6 @@ Vous devez avoir reçu une copie de la GNU Lesser General Public License en mêm
 [Working Effectively With Legacy Code]: http://c2.com/cgi/wiki?WorkingEffectivelyWithLegacyCode
 [Refactoring]: http://c2.com/cgi/wiki?RefactoringImprovingTheDesignOfExistingCode
 [Refactorer legacy]: http://martinsson-johan.blogspot.fr/2014/05/refactorer-legacy-meme-pas-peur.html
+[Mocks Aren't Stubs]: http://martinfowler.com/articles/mocksArentStubs.html
+[Pour en finir avec les Stubs et les Mocks]: http://agilitateur.azeau.com/post/2011/04/12/Pour-en-finir-avec-les-Stubs-et-les-Mocks
+[Inversion of Control Containers and the Dependency Injection pattern]: http://martinfowler.com/articles/injection.html
