@@ -28,7 +28,7 @@ public class CellulesVivantesTest {
     }
 
     @Test
-    public void peutFournirLeNombreDeVoisineVivantes() {
+    public void peutFournirLeNombreDeVoisinesVivantes() {
         vivantes.ajoute(new Position(-1, 0));
         vivantes.ajoute(new Position(0, 0));
         vivantes.ajoute(new Position(1, 0));
